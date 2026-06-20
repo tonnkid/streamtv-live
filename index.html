@@ -833,7 +833,7 @@ const channelCache = new Map();
 let popularList = [];
 async function refreshPopular() {
   try {
-    const r = await fetch('http://54.251.87.42:3456/api/popular?n=15');
+    const r = await fetch('https://seeking-trademark-plate-modifications.trycloudflare.com/api/popular?n=15');
     const data = await r.json();
     popularList = (data.channels || []).map(p => ({
       id:        p.key,
@@ -1057,7 +1057,7 @@ async function prefetchCounts(list) {
       const code = queue[i++];
       try {
         if (channelCache.has(code)) { setCatCount(code, channelCache.get(code).length); continue; }
-        const r = await fetch('http://54.251.87.42:3456/api/channels/' + encodeURIComponent(code));
+        const r = await fetch('https://seeking-trademark-plate-modifications.trycloudflare.com/api/channels/' + encodeURIComponent(code));
         const d = await r.json();
         if (Array.isArray(d.channels)) setCatCount(code, d.channels.length);
       } catch (e) { /* ignore individual failures */ }
@@ -1094,7 +1094,7 @@ function updateCatNav() {
 
 async function loadCountries() {
   try {
-    const r = await fetch("http://54.251.87.42:3456/api/countries");
+    const r = await fetch("https://seeking-trademark-plate-modifications.trycloudflare.com/api/countries");
     const data = await r.json();
     if (data.error) throw new Error(data.error);
     const el = document.getElementById("countries");
@@ -1318,7 +1318,7 @@ function buildChannelRow(ch, i) {
     // loaded that country yet. Hydrate first, then play.
     if (ch._popular && !ch.url && !ch.servers && ch._cc) {
       showToast('Memuat ' + (ch._ccName || ch._cc) + '…');
-      fetch('http://54.251.87.42:3456/api/channels/' + encodeURIComponent(ch._cc))
+      fetch('https://seeking-trademark-plate-modifications.trycloudflare.com/api/channels/' + encodeURIComponent(ch._cc))
         .then(r => r.json())
         .then(data => {
           if (!data.channels) throw new Error(data.error || 'kosong');
@@ -2229,7 +2229,7 @@ let _onlineHeartbeatTimer = null;
 let _onlineTotal = 0;
 async function refreshOnline() {
   try {
-    const r = await fetch('http://54.251.87.42:3456/api/online');
+    const r = await fetch('https://seeking-trademark-plate-modifications.trycloudflare.com/api/online');
     const data = await r.json();
     _onlineTotal = data.total || 0;
     const badge = document.getElementById('onlineBadge');
